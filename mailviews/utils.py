@@ -13,7 +13,11 @@ def split_docstring(value):
 
     :returns: a 2-tuple of the format ``(summary, body)``
     """
-    docstring = textwrap.dedent(getattr(value, '__doc__', ''))
+    value = getattr(value, '__doc__')
+    if not value:
+        return None
+
+    docstring = textwrap.dedent(value)
     if not docstring:
         return None
 
