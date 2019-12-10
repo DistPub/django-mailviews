@@ -194,7 +194,7 @@ class Preview(object):
 
         message = message_view.render_to_message()
         raw = message.message()
-        headers = OrderedDict((header, maybe_decode_header(raw[header])) for header in self.headers)
+        headers = OrderedDict((header, maybe_decode_header(raw.get(header, ''))) for header in self.headers)
 
         context.update({
             'message': message,
@@ -210,7 +210,7 @@ class Preview(object):
                 if alternative[1] == 'text/html')
             context.update({
                 'html': html,
-                'escaped_html': b64encode(html.encode('utf-8')),
+                'escaped_html': b64encode(html.encode('utf-8')).decode(),
             })
         except StopIteration:
             pass
